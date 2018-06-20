@@ -41,7 +41,6 @@ end component;
 begin
 
 s<= "00101" when E3 = '1' else "00000";
-s<= "00101" when E1 = '1' else "00000";
 R: Timer port map (E1, CLOCK, s, t);
 end_time <= '1' when t = "00000" else '0';
 tempo <= t
@@ -51,7 +50,7 @@ n <= "0000" when R2 = '1' and R1 = '0' else
 end_round <= '1' when n <= "1010" else '0';
 	
 MEM: ROM port map (A(9 downto 6), m);
-memory <= m when E2 = '1' else "0000000000";
+memory <= m when E2 = '1' else memory;
 end_game <= '1' when A(9 downto 0) = memory else '0';
 
 notN <= (not n) + 1;
